@@ -118,6 +118,13 @@ class MysqlTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(false, $column->index);
     }
 
+    public function testAutoIncrement()
+    {
+        $column = new Mysql($this->getColumn(0));
+
+        $this->assertEquals(true, $column->autoIncrement);
+    }
+
     private function getColumn($i)
     {
         if (is_null($this->columns))

@@ -29,6 +29,9 @@ class Mysql extends Column
 
         // Parse column index
         $this->parseIndex();
+
+        // Parse extra
+        $this->parseExtra();
     }
 
 
@@ -159,6 +162,21 @@ class Mysql extends Column
 
             default:
                 $this->index = false;
+        }
+    }
+
+    /**
+     * Parse extra parameters
+     */
+    protected function parseExtra()
+    {
+        if ($this->column->Extra == 'auto_increment')
+        {
+            $this->autoIncrement = true;
+        }
+        else
+        {
+            $this->autoIncrement = false;
         }
     }
 }
