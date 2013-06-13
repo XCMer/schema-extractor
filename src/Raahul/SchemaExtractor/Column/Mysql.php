@@ -78,7 +78,7 @@ class Mysql extends Column
         // an integer
         if ( in_array($this->type, array('int', 'varchar')) )
         {
-            $this->parameters = (int)$matches[1];
+            $this->parameters = array( (int)$matches[1] );
             return;
         }
 

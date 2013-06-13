@@ -24,7 +24,7 @@ class MysqlTest extends PHPUnit_Framework_TestCase
     {
         $column = new Mysql($this->getColumn(0));
 
-        $this->assertEquals(10, $column->parameters);
+        $this->assertEquals(array(10), $column->parameters);
     }
 
     public function testDecimalColumnParameter()
@@ -38,7 +38,7 @@ class MysqlTest extends PHPUnit_Framework_TestCase
     {
         $column = new Mysql($this->getColumn(2));
 
-        $this->assertEquals(100, $column->parameters);
+        $this->assertEquals(array(100), $column->parameters);
     }
 
     public function testEnumColumnParameters()
