@@ -69,33 +69,22 @@ class Mysql extends Column
         // We may or may not a match in $matches[1]
         if ( !isset($matches[1]) )
         {
-            $this->parameters = null;
+            $this->parameters = array();
             return;
         }
 
-        // From now on, we have parameters
-        // If the field type is int or varchar, the parameter is a single one as
-        // an integer
-        if ( in_array($this->type, array('int', 'varchar')) )
+        // From now on, we have parameters. Parse them as CSV.
+        $params = str_getcsv($matches[1], ',', "'");
+
+        // If the field type is enum, then the paramters are strings, else they are
+        // numeric
+        if ($this->type != 'enum')
         {
-            $this->parameters = array( (int)$matches[1] );
-            return;
+            $params = array_map('intval', $params);
         }
 
-        // Else if the field is of type decimal or enu,, the parameter is an array
-        // of values, integers for decimal, and strings for enum
-        if ( in_array($this->type, array('decimal', 'enum')) )
-        {
-            $param = str_getcsv($matches[1], ',', "'");
-
-            // Parameters are integers in case of decimals
-            if ('decimal' == $this->type)
-            {
-                $param = array_map('intval', $param);
-            }
-
-            $this->parameters = $param;
-        }
+        // Set the parameters
+        $this->parameters = $params;
     }
 
 
